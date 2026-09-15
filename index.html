@@ -2,13 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#070914">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JANNET — A Beautiful Presence</title>
+<meta name="theme-color" content="#080612">
+<meta name="description"
+content="A cinematic appreciation experience created by Brian through Mercy for Jannet.">
+
+<title>JANNET — Beyond Ordinary Friendship</title>
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   CORE
+========================================================= */
 
 *{
     margin:0;
@@ -22,1014 +30,2253 @@ html{
 
 body{
     font-family:Inter,sans-serif;
-    background:
-        radial-gradient(circle at 15% 20%,rgba(0,255,255,.10),transparent 30%),
-        radial-gradient(circle at 85% 30%,rgba(174,0,255,.12),transparent 30%),
-        radial-gradient(circle at 50% 100%,rgba(255,0,153,.08),transparent 35%),
-        #070914;
     color:#fff;
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(0,255,255,.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(186,95,255,.10),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(255,118,189,.07),
+            transparent 35%
+        ),
+        #070711;
+
     overflow:hidden;
 }
 
-/* =====================================================
-   GLOBAL PARTICLES
-===================================================== */
+body.ready{
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+/* =========================================================
+   GLOBAL ATMOSPHERE
+========================================================= */
 
 #particles{
     position:fixed;
     inset:0;
-    pointer-events:none;
     z-index:0;
+    pointer-events:none;
     overflow:hidden;
 }
 
 .particle{
     position:absolute;
-    width:3px;
-    height:3px;
+    width:2px;
+    height:2px;
     border-radius:50%;
-    background:#fff;
-    opacity:.5;
+    background:white;
+    opacity:.3;
+
     box-shadow:
-        0 0 8px #fff,
-        0 0 20px rgba(0,255,255,.8);
-    animation:floatParticle linear infinite;
+        0 0 7px rgba(255,255,255,.8),
+        0 0 18px rgba(0,255,255,.5);
+
+    animation:
+        particleFloat linear infinite;
 }
 
-@keyframes floatParticle{
-    from{
-        transform:translateY(110vh) translateX(0);
-        opacity:0;
-    }
-    10%{opacity:.7}
-    90%{opacity:.7}
-    to{
-        transform:translateY(-10vh) translateX(80px);
-        opacity:0;
-    }
-}
+@keyframes particleFloat{
 
-/* =====================================================
-   PIN SCREEN
-===================================================== */
-
-#pinScreen{
-    position:fixed;
-    inset:0;
-    z-index:10000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:
-        radial-gradient(circle at 50% 45%,
-            rgba(44,65,100,.25),
-            transparent 30%),
-        radial-gradient(circle at 20% 80%,
-            rgba(0,255,255,.08),
-            transparent 30%),
-        radial-gradient(circle at 80% 20%,
-            rgba(180,0,255,.10),
-            transparent 30%),
-        #050611;
-    transition:
-        opacity 1.2s ease,
-        visibility 1.2s ease;
-}
-
-#pinScreen.unlocking{
-    animation:pinExit 1.8s forwards;
-}
-
-@keyframes pinExit{
     0%{
-        opacity:1;
-        transform:scale(1);
-        filter:blur(0);
+        transform:
+            translate3d(0,110vh,0)
+            scale(.4);
+        opacity:0;
     }
 
-    35%{
-        opacity:1;
-        transform:scale(1.03);
-        filter:blur(0);
+    15%{
+        opacity:.6;
     }
 
-    70%{
-        opacity:.85;
-        transform:scale(1.12);
-        filter:blur(8px);
+    85%{
+        opacity:.6;
     }
 
     100%{
+        transform:
+            translate3d(
+                var(--drift),
+                -15vh,
+                0
+            )
+            scale(1.2);
+
         opacity:0;
-        transform:scale(1.4);
-        filter:blur(25px);
-        visibility:hidden;
     }
 }
 
-.pin-orbit{
-    position:absolute;
-    width:420px;
-    height:420px;
+/* =========================================================
+   LIGHT ORBS
+========================================================= */
+
+.light-orb{
+    position:fixed;
     border-radius:50%;
-    border:1px solid rgba(126,255,255,.08);
-    animation:orbitSpin 18s linear infinite;
+    pointer-events:none;
+    z-index:0;
+    filter:blur(90px);
+    opacity:.10;
 }
 
-.pin-orbit::before,
-.pin-orbit::after{
+.orb-a{
+    width:400px;
+    height:400px;
+    left:-160px;
+    top:-120px;
+    background:#00ffff;
+}
+
+.orb-b{
+    width:450px;
+    height:450px;
+    right:-190px;
+    top:30%;
+    background:#a500ff;
+}
+
+.orb-c{
+    width:400px;
+    height:400px;
+    left:35%;
+    bottom:-220px;
+    background:#ff4eb4;
+}
+
+/* =========================================================
+   PIN GATE
+========================================================= */
+
+#pinGate{
+
+    position:fixed;
+    inset:0;
+
+    z-index:10000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(71,82,125,.17),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 15% 80%,
+            rgba(0,255,255,.08),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(191,77,255,.08),
+            transparent 30%
+        ),
+
+        #05050d;
+
+    overflow:hidden;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+/* =========================================================
+   PIN ATMOSPHERE
+========================================================= */
+
+.gate-aura{
+
+    position:absolute;
+
+    width:520px;
+    height:520px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(137,255,255,.08),
+            transparent 62%
+        );
+
+    animation:
+        auraBreath 4s infinite ease-in-out;
+}
+
+@keyframes auraBreath{
+
+    0%,100%{
+        transform:scale(.9);
+        opacity:.65;
+    }
+
+    50%{
+        transform:scale(1.12);
+        opacity:1;
+    }
+}
+
+/* orbit rings */
+
+.orbit{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    border:1px solid
+        rgba(140,255,255,.08);
+
+    pointer-events:none;
+}
+
+.orbit.one{
+    width:430px;
+    height:430px;
+
+    animation:
+        orbitRotate 16s linear infinite;
+}
+
+.orbit.two{
+    width:570px;
+    height:570px;
+
+    border-color:
+        rgba(201,134,255,.06);
+
+    animation:
+        orbitRotateReverse 22s linear infinite;
+}
+
+.orbit.three{
+    width:730px;
+    height:730px;
+
+    border-color:
+        rgba(255,161,213,.035);
+
+    animation:
+        orbitRotate 35s linear infinite;
+}
+
+.orbit::before{
+
     content:"";
-    position:absolute;
-    border-radius:50%;
-}
 
-.pin-orbit::before{
-    width:7px;
-    height:7px;
-    top:20px;
-    left:50%;
+    position:absolute;
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
     background:#8fffff;
+
     box-shadow:
         0 0 15px #8fffff,
-        0 0 40px #8fffff;
+        0 0 35px #8fffff;
+
+    top:0;
+    left:50%;
+
+    transform:translate(-50%,-50%);
 }
 
-.pin-orbit::after{
-    width:5px;
-    height:5px;
-    bottom:55px;
-    right:20px;
-    background:#d48cff;
+.orbit.two::before{
+
+    background:#d394ff;
+
     box-shadow:
-        0 0 15px #d48cff,
-        0 0 35px #d48cff;
+        0 0 15px #d394ff,
+        0 0 35px #d394ff;
+
+    top:50%;
+    left:0;
 }
 
-@keyframes orbitSpin{
+.orbit.three::before{
+
+    background:#ff9bd4;
+
+    box-shadow:
+        0 0 15px #ff9bd4,
+        0 0 35px #ff9bd4;
+
+    top:50%;
+    left:100%;
+}
+
+@keyframes orbitRotate{
     to{
         transform:rotate(360deg);
     }
 }
 
-.pin-container{
-    width:min(92%,420px);
-    text-align:center;
+@keyframes orbitRotateReverse{
+    to{
+        transform:rotate(-360deg);
+    }
+}
+
+/* =========================================================
+   PIN CARD
+========================================================= */
+
+.pin-card{
+
     position:relative;
-    z-index:3;
-    padding:48px 30px;
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:40px;
+
+    width:min(92%,430px);
+
+    padding:
+        48px
+        32px
+        35px;
+
+    border-radius:42px;
+
+    text-align:center;
+
     background:
+
         linear-gradient(
             145deg,
             rgba(255,255,255,.075),
             rgba(255,255,255,.025)
         );
-    backdrop-filter:blur(30px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    backdrop-filter:
+        blur(35px);
+
     box-shadow:
-        25px 30px 80px rgba(0,0,0,.5),
-        inset 0 0 60px rgba(255,255,255,.015),
-        0 0 80px rgba(0,255,255,.035);
+
+        30px 35px 100px
+        rgba(0,0,0,.55),
+
+        inset 0 0 70px
+        rgba(255,255,255,.012),
+
+        0 0 100px
+        rgba(0,255,255,.035);
+
+    z-index:5;
+
+    transition:
+        transform 1s ease,
+        opacity 1s ease,
+        filter 1s ease;
 }
 
-.pin-symbol{
-    width:80px;
-    height:80px;
-    margin:0 auto 25px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid rgba(143,255,255,.25);
-    background:rgba(143,255,255,.035);
-    box-shadow:
-        0 0 40px rgba(0,255,255,.08),
-        inset 0 0 30px rgba(0,255,255,.04);
-    animation:lockPulse 2.8s infinite ease-in-out;
+/* =========================================================
+   PIN CARD UNLOCK TRANSFORMATION
+========================================================= */
+
+#pinGate.unlocking .pin-card{
+
+    animation:
+        cinematicUnlock 4.8s
+        cubic-bezier(.2,.8,.2,1)
+        forwards;
 }
 
-.pin-symbol span{
-    width:25px;
-    height:31px;
-    border:2px solid #9fffff;
-    border-radius:6px;
-    position:relative;
-    box-shadow:0 0 15px rgba(0,255,255,.5);
-}
+@keyframes cinematicUnlock{
 
-.pin-symbol span::before{
-    content:"";
-    position:absolute;
-    width:13px;
-    height:15px;
-    border:2px solid #9fffff;
-    border-bottom:0;
-    border-radius:10px 10px 0 0;
-    left:4px;
-    top:-14px;
-}
+    0%{
+        transform:
+            scale(1)
+            rotateX(0deg)
+            rotateY(0deg);
 
-@keyframes lockPulse{
-    50%{
-        transform:scale(1.05);
+        opacity:1;
+        filter:blur(0);
+    }
+
+    18%{
+
+        transform:
+            scale(1.035)
+            rotateX(3deg);
+
         box-shadow:
-            0 0 60px rgba(0,255,255,.15),
-            inset 0 0 40px rgba(0,255,255,.06);
+            0 0 100px
+            rgba(0,255,255,.15);
+    }
+
+    35%{
+
+        transform:
+            scale(.96)
+            rotateX(-5deg)
+            rotateY(3deg);
+
+        opacity:1;
+    }
+
+    50%{
+
+        transform:
+            scale(1.08)
+            rotateX(5deg)
+            rotateY(-5deg);
+
+        filter:
+            blur(1px);
+
+    }
+
+    68%{
+
+        transform:
+            scale(1.35)
+            rotateX(0)
+            rotateY(0);
+
+        opacity:.82;
+
+        filter:
+            blur(3px);
+    }
+
+    82%{
+
+        transform:
+            scale(1.9);
+
+        opacity:.4;
+
+        filter:
+            blur(10px);
+    }
+
+    100%{
+
+        transform:
+            scale(3.7);
+
+        opacity:0;
+
+        filter:
+            blur(25px);
     }
 }
 
-.pin-label{
-    font-size:.62rem;
-    text-transform:uppercase;
-    letter-spacing:5px;
-    color:rgba(255,255,255,.38);
+/* =========================================================
+   PIN LOGO
+========================================================= */
+
+.lock-logo{
+
+    width:82px;
+    height:82px;
+
+    margin:
+        0 auto 27px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:
+        1px solid
+        rgba(143,255,255,.25);
+
+    background:
+        rgba(143,255,255,.025);
+
+    box-shadow:
+
+        0 0 45px
+        rgba(0,255,255,.08),
+
+        inset 0 0 30px
+        rgba(0,255,255,.035);
+
+    animation:
+        logoBreath 3s
+        infinite ease-in-out;
+}
+
+@keyframes logoBreath{
+
+    50%{
+        transform:scale(1.06);
+
+        box-shadow:
+
+            0 0 65px
+            rgba(0,255,255,.15),
+
+            inset 0 0 40px
+            rgba(0,255,255,.06);
+    }
+}
+
+.lock-icon{
+
+    width:26px;
+    height:31px;
+
+    border:
+        2px solid
+        #99ffff;
+
+    border-radius:6px;
+
+    position:relative;
+
+    box-shadow:
+        0 0 15px
+        rgba(0,255,255,.55);
+}
+
+.lock-icon::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:13px;
+    height:15px;
+
+    left:4px;
+    top:-14px;
+
+    border:
+        2px solid
+        #99ffff;
+
+    border-bottom:0;
+
+    border-radius:
+        10px
+        10px
+        0
+        0;
+}
+
+/* =========================================================
+   PIN TEXT
+========================================================= */
+
+.gate-label{
+
+    font-size:.60rem;
+
+    letter-spacing:
+        5px;
+
+    text-transform:
+        uppercase;
+
+    color:
+        rgba(255,255,255,.36);
+
     margin-bottom:12px;
 }
 
-.pin-title{
-    font-family:"Playfair Display",serif;
-    font-size:2.5rem;
+.gate-title{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(2rem,7vw,2.8rem);
+
     font-weight:500;
-    margin-bottom:12px;
+
+    line-height:1.05;
+
+    margin-bottom:13px;
 }
 
-.pin-title span{
-    background:linear-gradient(
-        90deg,
-        #8fffff,
-        #d69aff,
-        #ffb5dd
-    );
+.gate-title span{
+
+    background:
+        linear-gradient(
+            90deg,
+            #8fffff,
+            #d49bff,
+            #ffb5dd
+        );
+
     -webkit-background-clip:text;
+
     color:transparent;
 }
 
-.pin-description{
-    color:rgba(255,255,255,.48);
-    font-size:.78rem;
-    line-height:1.7;
-    margin-bottom:30px;
+.gate-description{
+
+    font-size:.76rem;
+
+    line-height:1.8;
+
+    color:
+        rgba(255,255,255,.45);
+
+    max-width:330px;
+
+    margin:
+        0 auto 28px;
 }
 
-/* =====================================================
+/* =========================================================
    PIN DOTS
-===================================================== */
+========================================================= */
 
 .pin-dots{
+
     display:flex;
+
     justify-content:center;
-    gap:14px;
-    margin-bottom:28px;
+
+    gap:15px;
+
+    margin-bottom:23px;
 }
 
 .pin-dot{
+
     width:13px;
     height:13px;
+
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.25);
-    background:rgba(255,255,255,.025);
-    transition:.3s;
+
+    border:
+        1px solid
+        rgba(255,255,255,.23);
+
+    background:
+        rgba(255,255,255,.025);
+
+    transition:
+        .35s
+        cubic-bezier(.2,.8,.2,1);
 }
 
-.pin-dot.filled{
+.pin-dot.active{
+
     background:#8fffff;
+
     border-color:#8fffff;
+
     box-shadow:
-        0 0 10px #8fffff,
-        0 0 25px rgba(0,255,255,.7);
-    transform:scale(1.15);
+
+        0 0 12px #8fffff,
+        0 0 30px
+        rgba(0,255,255,.55);
+
+    transform:
+        scale(1.25);
 }
 
-.pin-dot.error{
-    background:#ff75c8;
-    border-color:#ff75c8;
+.pin-dot.wrong{
+
+    background:#ff87c8;
+
+    border-color:#ff87c8;
+
     box-shadow:
-        0 0 15px #ff75c8;
+        0 0 20px #ff87c8;
 }
 
-/* =====================================================
-   PIN KEYPAD
-===================================================== */
+/* =========================================================
+   KEYPAD
+========================================================= */
 
 .keypad{
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:11px;
-    max-width:290px;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    max-width:285px;
+
     margin:auto;
 }
 
 .key{
-    height:58px;
-    border:1px solid rgba(255,255,255,.09);
-    border-radius:18px;
+
+    height:57px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:17px;
+
     background:
+
         linear-gradient(
             145deg,
             rgba(255,255,255,.07),
             rgba(255,255,255,.025)
         );
+
     color:white;
-    font-size:1rem;
+
+    font-family:Inter,sans-serif;
+
     cursor:pointer;
+
     transition:
         transform .2s,
-        background .2s,
-        box-shadow .2s;
+        background .25s,
+        box-shadow .25s;
+
     box-shadow:
-        8px 8px 20px rgba(0,0,0,.25),
-        -5px -5px 15px rgba(255,255,255,.015);
+
+        8px 8px 20px
+        rgba(0,0,0,.25),
+
+        -4px -4px 15px
+        rgba(255,255,255,.012);
 }
 
 .key:hover{
-    background:rgba(255,255,255,.10);
-    transform:translateY(-2px);
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255,255,255,.10);
+
     box-shadow:
-        0 0 20px rgba(0,255,255,.08);
+        0 0 25px
+        rgba(0,255,255,.08);
 }
 
 .key:active{
-    transform:scale(.92);
+
+    transform:
+        scale(.91);
 }
 
 .key.clear{
-    color:#ff9bd6;
+    color:#ff9bd4;
 }
 
 .key.enter{
-    color:#91ffff;
+    color:#8fffff;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,255,255,.08),
+            rgba(173,87,255,.06)
+        );
 }
 
+/* =========================================================
+   STATUS
+========================================================= */
+
 .pin-status{
-    height:20px;
-    margin-top:20px;
-    font-size:.65rem;
-    letter-spacing:1px;
-    color:rgba(255,255,255,.35);
+
+    height:22px;
+
+    margin-top:18px;
+
+    font-size:.62rem;
+
+    letter-spacing:
+        1.5px;
+
+    color:
+        rgba(255,255,255,.28);
+
     transition:.3s;
 }
 
 .pin-status.error{
-    color:#ff9bd6;
+    color:#ff92ce;
 }
 
 .pin-status.success{
     color:#8fffff;
 }
 
-/* =====================================================
-   UNLOCK BURST
-===================================================== */
+/* =========================================================
+   UNLOCK MESSAGE
+========================================================= */
 
-.unlock-burst{
+.unlock-message{
+
     position:absolute;
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    pointer-events:none;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.6);
+
     opacity:0;
+
+    z-index:20;
+
+    text-align:center;
+
+    pointer-events:none;
 }
 
-#pinScreen.unlocking .unlock-burst{
-    animation:burst 1.7s ease-out forwards;
+#pinGate.unlocking .unlock-message{
+
+    animation:
+        unlockMessage
+        4.8s
+        ease
+        forwards;
 }
 
-@keyframes burst{
-    0%{
+@keyframes unlockMessage{
+
+    0%,25%{
         opacity:0;
-        transform:scale(.1);
-        box-shadow:
-            0 0 0 0 rgba(143,255,255,.5);
+        transform:
+            translate(-50%,-50%)
+            scale(.6);
     }
 
-    25%{
+    40%{
         opacity:1;
-        transform:scale(3);
-        box-shadow:
-            0 0 80px 30px rgba(143,255,255,.15),
-            0 0 160px 80px rgba(200,130,255,.08);
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+
+    70%{
+        opacity:1;
+        transform:
+            translate(-50%,-50%)
+            scale(1.06);
     }
 
     100%{
         opacity:0;
-        transform:scale(80);
-        box-shadow:
-            0 0 150px 100px rgba(143,255,255,.1);
+        transform:
+            translate(-50%,-50%)
+            scale(1.35);
     }
 }
 
-/* =====================================================
-   MAIN SPLASH
-===================================================== */
+.unlock-message .mini{
 
-#splash{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:
-        radial-gradient(circle at center,
-            rgba(30,40,80,.45),
-            transparent 45%),
-        #050611;
-    transition:
-        opacity 1.4s ease,
-        visibility 1.4s ease;
+    font-size:.62rem;
+
+    letter-spacing:5px;
+
+    color:
+        rgba(255,255,255,.4);
+
+    text-transform:uppercase;
+
+    margin-bottom:13px;
 }
 
-#splash.hide{
+.unlock-message h2{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(2rem,7vw,4rem);
+
+    font-weight:500;
+
+    white-space:nowrap;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #9fffff,
+            #e1b0ff,
+            #ffffff
+        );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    text-shadow:
+        0 0 35px
+        rgba(0,255,255,.18);
+}
+
+/* =========================================================
+   WARM LIGHT EXPLOSION
+========================================================= */
+
+.unlock-wave{
+
+    position:absolute;
+
+    width:30px;
+    height:30px;
+
+    border-radius:50%;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%)
+        scale(0);
+
+    opacity:0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.95),
+            rgba(146,255,255,.35) 25%,
+            rgba(205,146,255,.15) 45%,
+            transparent 70%
+        );
+
+    pointer-events:none;
+}
+
+#pinGate.unlocking .unlock-wave{
+
+    animation:
+        warmExplosion
+        5s
+        cubic-bezier(.15,.75,.25,1)
+        forwards;
+}
+
+@keyframes warmExplosion{
+
+    0%{
+        opacity:0;
+        transform:
+            translate(-50%,-50%)
+            scale(0);
+    }
+
+    28%{
+        opacity:1;
+        transform:
+            translate(-50%,-50%)
+            scale(5);
+    }
+
+    55%{
+        opacity:.7;
+        transform:
+            translate(-50%,-50%)
+            scale(30);
+    }
+
+    80%{
+        opacity:.35;
+        transform:
+            translate(-50%,-50%)
+            scale(65);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            translate(-50%,-50%)
+            scale(110);
+    }
+}
+
+/* =========================================================
+   SPLASH AFTER UNLOCK
+========================================================= */
+
+#splash{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:9000;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(47,57,100,.45),
+            transparent 45%
+        ),
+        #05050d;
+
     opacity:0;
     visibility:hidden;
+
+    transition:
+        opacity 1.4s ease;
+}
+
+#splash.show{
+
+    opacity:1;
+    visibility:visible;
 }
 
 .splash-content{
-    width:min(90%,650px);
-    text-align:center;
-    position:relative;
+
+    width:min(90%,700px);
+
+    animation:
+        splashArrival
+        2.5s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes splashArrival{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(50px)
+            scale(.92);
+
+        filter:blur(10px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:blur(0);
+    }
 }
 
 .splash-ring{
-    width:180px;
-    height:180px;
-    margin:0 auto 35px;
+
+    width:170px;
+    height:170px;
+
+    margin:
+        0 auto 35px;
+
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.15);
-    position:relative;
+
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
     box-shadow:
-        inset 0 0 50px rgba(0,255,255,.08),
-        0 0 70px rgba(0,255,255,.08);
-    animation:ringPulse 3s infinite ease-in-out;
+
+        inset 0 0 60px
+        rgba(0,255,255,.07),
+
+        0 0 80px
+        rgba(0,255,255,.08);
+
+    position:relative;
+
+    animation:
+        splashRing 3s
+        infinite ease-in-out;
+}
+
+@keyframes splashRing{
+
+    50%{
+        transform:scale(1.04);
+
+        box-shadow:
+
+            inset 0 0 80px
+            rgba(0,255,255,.12),
+
+            0 0 100px
+            rgba(0,255,255,.12);
+    }
 }
 
 .splash-ring::before,
 .splash-ring::after{
+
     content:"";
+
     position:absolute;
+
     inset:-18px;
+
     border-radius:50%;
-    border:1px solid rgba(0,255,255,.18);
-    animation:spin 8s linear infinite;
+
+    border:
+        1px solid
+        rgba(0,255,255,.15);
+
+    animation:
+        rotateRing
+        8s
+        linear
+        infinite;
 }
 
 .splash-ring::after{
-    inset:-38px;
-    border-color:rgba(191,0,255,.12);
-    animation-direction:reverse;
-    animation-duration:12s;
+
+    inset:-37px;
+
+    border-color:
+        rgba(207,138,255,.10);
+
+    animation-direction:
+        reverse;
+
+    animation-duration:
+        13s;
 }
 
-@keyframes ringPulse{
-    50%{
-        transform:scale(1.04);
-        box-shadow:
-            inset 0 0 70px rgba(0,255,255,.12),
-            0 0 90px rgba(0,255,255,.15);
+@keyframes rotateRing{
+
+    to{
+        transform:rotate(360deg);
     }
 }
 
-@keyframes spin{
-    to{transform:rotate(360deg)}
-}
+.splash-j{
 
-.splash-letter{
-    font-family:"Playfair Display",serif;
+    font-family:
+        "Playfair Display",
+        serif;
+
     font-size:5rem;
-    font-weight:600;
+
     background:
         linear-gradient(
             135deg,
             #fff,
-            #8ffcff,
-            #d994ff,
+            #8fffff,
+            #d8a1ff,
             #fff
         );
+
     -webkit-background-clip:text;
+
     color:transparent;
-    filter:drop-shadow(
-        0 0 20px rgba(0,255,255,.35)
-    );
 }
 
 .splash-small{
-    letter-spacing:7px;
+
+    font-size:.62rem;
+
     text-transform:uppercase;
-    color:rgba(255,255,255,.55);
-    font-size:.68rem;
-    margin-bottom:18px;
+
+    letter-spacing:6px;
+
+    color:
+        rgba(255,255,255,.45);
+
+    margin-bottom:17px;
 }
 
 .splash-title{
-    font-family:"Playfair Display",serif;
-    font-size:clamp(2.3rem,7vw,5rem);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(2.7rem,8vw,5.5rem);
+
+    font-weight:500;
+
     line-height:1;
+
     margin-bottom:18px;
 }
 
 .splash-title span{
+
     background:
         linear-gradient(
             90deg,
-            #7fffff,
-            #d99aff,
-            #ff9bd9
+            #8fffff,
+            #d7a0ff,
+            #ffafd9
         );
+
     -webkit-background-clip:text;
+
     color:transparent;
 }
 
-.splash-sub{
-    color:rgba(255,255,255,.62);
-    max-width:500px;
+.splash-text{
+
+    max-width:520px;
+
     margin:auto;
-    line-height:1.8;
-    font-size:.95rem;
+
+    line-height:1.9;
+
+    color:
+        rgba(255,255,255,.52);
+
+    font-size:.88rem;
 }
 
-.enter-btn{
-    margin-top:35px;
-    border:1px solid rgba(255,255,255,.18);
-    background:rgba(255,255,255,.06);
-    backdrop-filter:blur(20px);
-    color:#fff;
-    padding:16px 34px;
-    border-radius:100px;
-    cursor:pointer;
-    font-size:.85rem;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    transition:.4s;
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.3),
-        inset 0 0 25px rgba(255,255,255,.03);
-}
-
-.enter-btn:hover{
-    transform:translateY(-4px) scale(1.03);
-    border-color:rgba(125,255,255,.6);
-    box-shadow:
-        0 0 35px rgba(0,255,255,.18),
-        0 20px 60px rgba(0,0,0,.4);
-}
-
-/* =====================================================
+/* =========================================================
    MUSIC
-===================================================== */
+========================================================= */
 
-.music-control{
+audio{
+    display:none;
+}
+
+.music-button{
+
     position:fixed;
+
     right:22px;
     top:22px;
-    z-index:500;
+
     width:50px;
     height:50px;
+
     border-radius:50%;
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.06);
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    background:
+        rgba(255,255,255,.05);
+
     backdrop-filter:blur(20px);
+
+    z-index:700;
+
     color:white;
+
     cursor:pointer;
+
     display:flex;
     align-items:center;
     justify-content:center;
 }
 
-.music-bars{
+.bars{
+
     display:flex;
+
     gap:3px;
+
     align-items:center;
-    height:20px;
 }
 
-.music-bars span{
+.bars span{
+
     width:3px;
     height:8px;
+
     border-radius:10px;
-    background:#8ffcff;
-    animation:bars .7s infinite ease-in-out;
+
+    background:#8fffff;
+
+    animation:
+        soundBars
+        .7s
+        infinite
+        ease-in-out;
 }
 
-.music-bars span:nth-child(2){animation-delay:.15s}
-.music-bars span:nth-child(3){animation-delay:.3s}
-.music-bars span:nth-child(4){animation-delay:.45s}
+.bars span:nth-child(2){
+    animation-delay:.12s;
+}
 
-.music-paused span{
+.bars span:nth-child(3){
+    animation-delay:.24s;
+}
+
+.bars span:nth-child(4){
+    animation-delay:.36s;
+}
+
+.bars.paused span{
+
     animation-play-state:paused;
+
     height:5px;
 }
 
-@keyframes bars{
-    50%{height:19px}
+@keyframes soundBars{
+
+    50%{
+        height:20px;
+    }
 }
 
-/* =====================================================
-   NAV
-===================================================== */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 .nav{
+
     position:fixed;
+
     top:18px;
     left:50%;
-    transform:translateX(-50%);
-    width:min(92%,900px);
-    z-index:400;
-    padding:10px;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(8,10,25,.55);
-    backdrop-filter:blur(25px);
-    border-radius:100px;
+
+    transform:
+        translateX(-50%);
+
+    width:min(92%,950px);
+
+    padding:9px;
+
     display:flex;
+
     justify-content:center;
-    gap:5px;
+
+    gap:4px;
+
+    z-index:600;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(7,8,20,.55);
+
+    backdrop-filter:
+        blur(25px);
+
+    border-radius:100px;
 }
 
 .nav a{
+
+    color:
+        rgba(255,255,255,.48);
+
     text-decoration:none;
-    color:rgba(255,255,255,.58);
-    font-size:.72rem;
-    padding:10px 15px;
+
+    font-size:.68rem;
+
+    padding:
+        10px
+        14px;
+
     border-radius:50px;
+
     transition:.3s;
+
+    white-space:nowrap;
 }
 
 .nav a:hover{
+
     color:white;
-    background:rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.07);
+
 }
 
-/* =====================================================
+/* =========================================================
    MAIN
-===================================================== */
+========================================================= */
 
 main{
+
     position:relative;
+
     z-index:2;
 }
 
 section{
+
     width:min(1150px,92%);
-    margin:auto;
+
     min-height:100vh;
+
+    margin:auto;
+
+    padding:
+        130px 0;
+
     display:flex;
+
     align-items:center;
-    padding:120px 0;
 }
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+========================================================= */
 
 .hero{
-    text-align:center;
+
     justify-content:center;
+
+    text-align:center;
 }
 
 .hero-inner{
-    max-width:850px;
+
+    max-width:900px;
 }
 
 .eyebrow{
-    color:#88ffff;
-    font-size:.7rem;
+
+    font-size:.65rem;
+
     letter-spacing:6px;
+
     text-transform:uppercase;
+
+    color:#8fffff;
+
     margin-bottom:25px;
-    opacity:.8;
 }
 
 .hero h1{
-    font-family:"Playfair Display",serif;
-    font-size:clamp(4rem,13vw,10rem);
-    line-height:.82;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(4.5rem,14vw,10rem);
+
+    line-height:.8;
+
     font-weight:500;
-    letter-spacing:-6px;
+
+    letter-spacing:-7px;
+
     background:
         linear-gradient(
             135deg,
-            #fff 15%,
-            #8fffff 40%,
-            #cf9cff 65%,
-            #ffb4df 90%
+            #ffffff,
+            #91ffff 38%,
+            #d19bff 65%,
+            #ffb3db
         );
+
     -webkit-background-clip:text;
+
     color:transparent;
-    filter:drop-shadow(
-        0 0 40px rgba(0,255,255,.12)
-    );
+
+    filter:
+        drop-shadow(
+            0 0 40px
+            rgba(0,255,255,.12)
+        );
 }
 
-.hero-description{
-    max-width:650px;
-    margin:40px auto 0;
-    color:rgba(255,255,255,.6);
+.hero-text{
+
+    max-width:680px;
+
+    margin:
+        45px auto 0;
+
+    color:
+        rgba(255,255,255,.55);
+
     line-height:2;
-    font-size:1rem;
+
+    font-size:.95rem;
 }
 
-.scroll-hint{
-    margin-top:60px;
-    font-size:.65rem;
-    text-transform:uppercase;
+.scroll{
+
+    margin-top:65px;
+
+    color:
+        rgba(255,255,255,.27);
+
+    font-size:.6rem;
+
     letter-spacing:4px;
-    color:rgba(255,255,255,.35);
+
+    text-transform:uppercase;
 }
 
 .scroll-line{
+
     width:1px;
-    height:60px;
+    height:65px;
+
+    margin:
+        15px auto;
+
     background:
-        linear-gradient(#fff,transparent);
-    margin:15px auto;
-    animation:scrollLine 1.8s infinite;
+        linear-gradient(
+            #8fffff,
+            transparent
+        );
+
+    animation:
+        scrollDown
+        1.8s
+        infinite;
 }
 
-@keyframes scrollLine{
+@keyframes scrollDown{
+
     50%{
-        transform:translateY(12px);
+        transform:
+            translateY(12px);
+
         opacity:.3;
     }
 }
 
-/* =====================================================
-   HEADINGS
-===================================================== */
+/* =========================================================
+   SECTION TYPOGRAPHY
+========================================================= */
 
 .section-inner{
+
     width:100%;
 }
 
-.section-label{
-    font-size:.65rem;
-    text-transform:uppercase;
+.section-number{
+
+    color:#8fffff;
+
+    font-size:.61rem;
+
     letter-spacing:5px;
-    color:#87ffff;
+
+    text-transform:uppercase;
+
     margin-bottom:18px;
 }
 
 .section-title{
-    font-family:"Playfair Display",serif;
-    font-size:clamp(2.8rem,6vw,5rem);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(2.8rem,6vw,5.5rem);
+
     font-weight:500;
-    line-height:1;
+
+    line-height:.98;
+
     margin-bottom:25px;
 }
 
 .section-title span{
-    color:#91ffff;
-}
 
-.section-text{
-    color:rgba(255,255,255,.58);
-    line-height:1.9;
-    max-width:700px;
-}
-
-/* =====================================================
-   CARDS
-===================================================== */
-
-.cards{
-    display:grid;
-    grid-template-columns:
-        repeat(3,1fr);
-    gap:20px;
-    margin-top:55px;
-}
-
-.card{
-    position:relative;
-    padding:35px;
-    min-height:260px;
-    border-radius:30px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.075),
-            rgba(255,255,255,.025)
-        );
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:
-        15px 15px 50px rgba(0,0,0,.35),
-        -10px -10px 40px rgba(255,255,255,.015),
-        inset 0 0 40px rgba(255,255,255,.015);
-    backdrop-filter:blur(25px);
-    overflow:hidden;
-    transition:.5s cubic-bezier(.2,.8,.2,1);
-}
-
-.card::before{
-    content:"";
-    position:absolute;
-    width:100px;
-    height:100px;
-    border-radius:50%;
-    background:#00ffff;
-    filter:blur(60px);
-    opacity:.07;
-    top:-30px;
-    right:-30px;
-}
-
-.card:hover{
-    transform:translateY(-12px);
-    border-color:rgba(137,255,255,.2);
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
-        0 0 40px rgba(0,255,255,.06);
-}
-
-.card-number{
-    font-size:.7rem;
-    color:rgba(255,255,255,.3);
-    margin-bottom:40px;
-}
-
-.card h3{
-    font-family:"Playfair Display",serif;
-    font-size:1.7rem;
-    font-weight:500;
-    margin-bottom:15px;
-}
-
-.card p{
-    color:rgba(255,255,255,.52);
-    font-size:.85rem;
-    line-height:1.8;
-}
-
-/* =====================================================
-   LETTER
-===================================================== */
-
-.letter-wrap{
-    max-width:850px;
-    margin:55px auto 0;
-    padding:55px;
-    border-radius:35px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.065),
-            rgba(255,255,255,.02)
-        );
-    border:1px solid rgba(255,255,255,.09);
-    box-shadow:
-        20px 25px 70px rgba(0,0,0,.4),
-        inset 0 0 60px rgba(255,255,255,.015);
-    backdrop-filter:blur(25px);
-}
-
-.letter{
-    font-family:"Playfair Display",serif;
-    font-size:1.25rem;
-    line-height:2.1;
-    color:rgba(255,255,255,.78);
-}
-
-.letter p{
-    margin-bottom:25px;
-}
-
-.signature{
-    margin-top:45px;
-    text-align:right;
-    color:#8fffff;
-    font-family:"Playfair Display",serif;
-    font-size:1.5rem;
-}
-
-.signature small{
-    display:block;
-    font-family:Inter,sans-serif;
-    font-size:.6rem;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.3);
-    margin-top:8px;
-}
-
-/* =====================================================
-   CONNECTION
-===================================================== */
-
-.connection{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-    margin-top:50px;
-}
-
-.connection-box{
-    min-height:300px;
-    padding:45px;
-    border-radius:35px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,255,255,.055),
-            rgba(180,0,255,.045)
-        );
-    border:1px solid rgba(255,255,255,.08);
-    box-shadow:
-        inset 0 0 60px rgba(255,255,255,.015),
-        15px 20px 60px rgba(0,0,0,.3);
-}
-
-.connection-box h3{
-    font-family:"Playfair Display",serif;
-    font-size:2.3rem;
-    margin-bottom:20px;
-}
-
-.connection-box p{
-    color:rgba(255,255,255,.56);
-    line-height:1.9;
-}
-
-/* =====================================================
-   QUOTE
-===================================================== */
-
-.quote-section{
-    justify-content:center;
-    text-align:center;
-}
-
-.big-quote{
-    max-width:950px;
-    font-family:"Playfair Display",serif;
-    font-size:clamp(2.5rem,6vw,5.8rem);
-    line-height:1.15;
-    font-weight:400;
-}
-
-.big-quote span{
     background:
         linear-gradient(
             90deg,
             #8fffff,
-            #cba1ff,
-            #ffb5df
+            #d19dff
         );
+
     -webkit-background-clip:text;
+
     color:transparent;
 }
 
-.quote-author{
-    margin-top:35px;
-    font-size:.65rem;
+.section-description{
+
+    max-width:720px;
+
+    color:
+        rgba(255,255,255,.52);
+
+    line-height:1.95;
+
+    font-size:.9rem;
+}
+
+/* =========================================================
+   PORTRAIT FEATURE
+========================================================= */
+
+.portrait-section{
+
+    display:grid;
+
+    grid-template-columns:
+        .9fr 1.1fr;
+
+    gap:70px;
+
+    align-items:center;
+}
+
+.portrait-frame{
+
+    position:relative;
+
+    padding:13px;
+
+    border-radius:35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(143,255,255,.25),
+            rgba(198,127,255,.15),
+            rgba(255,156,211,.15)
+        );
+
+    box-shadow:
+
+        0 30px 100px
+        rgba(0,0,0,.45),
+
+        0 0 80px
+        rgba(0,255,255,.06);
+}
+
+.portrait-frame::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-20px;
+
+    border-radius:45px;
+
+    border:
+        1px solid
+        rgba(143,255,255,.07);
+
+    z-index:-1;
+
+    animation:
+        portraitAura
+        5s
+        infinite ease-in-out;
+}
+
+@keyframes portraitAura{
+
+    50%{
+        transform:scale(1.035);
+        opacity:.5;
+    }
+}
+
+.portrait-frame img{
+
+    display:block;
+
+    width:100%;
+
+    aspect-ratio:
+        3/4;
+
+    object-fit:cover;
+
+    border-radius:27px;
+
+    filter:
+        saturate(.95)
+        contrast(1.02);
+}
+
+.portrait-caption{
+
+    position:absolute;
+
+    bottom:27px;
+
+    left:27px;
+    right:27px;
+
+    padding:17px 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius:20px;
+
+    background:
+        rgba(4,5,14,.55);
+
+    backdrop-filter:blur(20px);
+
+    font-size:.66rem;
+
+    letter-spacing:1px;
+
+    color:
+        rgba(255,255,255,.7);
+}
+
+.profile-copy{
+
+    padding:10px 0;
+}
+
+.profile-badge{
+
+    display:inline-flex;
+
+    padding:
+        8px
+        13px;
+
+    border:
+        1px solid
+        rgba(143,255,255,.15);
+
+    border-radius:50px;
+
+    color:#8fffff;
+
+    font-size:.58rem;
+
+    letter-spacing:3px;
+
     text-transform:uppercase;
-    letter-spacing:5px;
-    color:rgba(255,255,255,.35);
+
+    margin-bottom:23px;
 }
 
-/* =====================================================
-   FINAL
-===================================================== */
+.profile-copy h3{
 
-.final{
-    justify-content:center;
-    text-align:center;
-    min-height:90vh;
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(2rem,4vw,3.5rem);
+
+    font-weight:500;
+
+    margin-bottom:25px;
 }
 
-.final-heart{
+.profile-copy p{
+
+    color:
+        rgba(255,255,255,.54);
+
+    line-height:1.95;
+
+    font-size:.9rem;
+
+    margin-bottom:20px;
+}
+
+.motive{
+
+    padding:25px;
+
+    margin-top:30px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    box-shadow:
+        inset 0 0 40px
+        rgba(255,255,255,.01);
+}
+
+.motive-title{
+
+    font-size:.58rem;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:#8fffff;
+
+    margin-bottom:12px;
+}
+
+.motive p{
+
+    margin:0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:1.05rem;
+
+    color:
+        rgba(255,255,255,.72);
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+
+    margin-top:55px;
+}
+
+.card{
+
+    min-height:270px;
+
+    padding:35px;
+
+    border-radius:30px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.022)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    backdrop-filter:
+        blur(25px);
+
+    box-shadow:
+
+        18px 22px 60px
+        rgba(0,0,0,.3),
+
+        inset 0 0 50px
+        rgba(255,255,255,.012);
+
+    transition:
+        .55s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+.card::after{
+
+    content:"";
+
+    position:absolute;
+
     width:120px;
     height:120px;
-    margin:0 auto 40px;
+
+    right:-50px;
+    top:-50px;
+
     border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.035);
-    box-shadow:
-        0 0 80px rgba(0,255,255,.1),
-        inset 0 0 40px rgba(255,255,255,.03);
-    animation:heartFloat 3s infinite ease-in-out;
+
+    background:#00ffff;
+
+    filter:blur(65px);
+
+    opacity:.055;
 }
 
-.final-heart::before{
+.card:hover{
+
+    transform:
+        translateY(-13px);
+
+    border-color:
+        rgba(143,255,255,.18);
+
+    box-shadow:
+
+        0 30px 80px
+        rgba(0,0,0,.4),
+
+        0 0 50px
+        rgba(0,255,255,.045);
+}
+
+.card-index{
+
+    font-size:.58rem;
+
+    letter-spacing:3px;
+
+    color:
+        rgba(255,255,255,.27);
+
+    margin-bottom:42px;
+}
+
+.card h3{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:1.8rem;
+
+    font-weight:500;
+
+    margin-bottom:15px;
+}
+
+.card p{
+
+    color:
+        rgba(255,255,255,.48);
+
+    font-size:.82rem;
+
+    line-height:1.9;
+}
+
+/* =========================================================
+   CONNECTION
+========================================================= */
+
+.connection-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:22px;
+
+    margin-top:55px;
+}
+
+.connection-box{
+
+    min-height:310px;
+
+    padding:42px;
+
+    border-radius:32px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,255,255,.045),
+            rgba(185,101,255,.035)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    box-shadow:
+        15px 20px 60px
+        rgba(0,0,0,.3);
+}
+
+.connection-label{
+
+    font-size:.58rem;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:#8fffff;
+
+    margin-bottom:25px;
+}
+
+.connection-box h3{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:2.4rem;
+
+    font-weight:500;
+
+    margin-bottom:20px;
+}
+
+.connection-box p{
+
+    color:
+        rgba(255,255,255,.5);
+
+    line-height:1.95;
+
+    font-size:.87rem;
+}
+
+/* =========================================================
+   QUOTE
+========================================================= */
+
+.quote-section{
+
+    justify-content:center;
+
+    text-align:center;
+}
+
+.big-quote{
+
+    max-width:1000px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(2.6rem,6vw,6rem);
+
+    line-height:1.1;
+
+    font-weight:400;
+}
+
+.big-quote span{
+
+    background:
+        linear-gradient(
+            90deg,
+            #8fffff,
+            #d19dff,
+            #ffb2dc
+        );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+}
+
+.quote-by{
+
+    margin-top:40px;
+
+    font-size:.6rem;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+    color:
+        rgba(255,255,255,.28);
+}
+
+/* =========================================================
+   LETTER
+========================================================= */
+
+.letter{
+
+    max-width:900px;
+
+    margin:
+        55px auto 0;
+
+    padding:60px;
+
+    border-radius:38px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.06),
+            rgba(255,255,255,.018)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+
+        25px 30px 90px
+        rgba(0,0,0,.4),
+
+        inset 0 0 60px
+        rgba(255,255,255,.012);
+}
+
+.letter p{
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:1.16rem;
+
+    line-height:2.05;
+
+    color:
+        rgba(255,255,255,.70);
+
+    margin-bottom:25px;
+}
+
+.signature{
+
+    margin-top:50px;
+
+    text-align:right;
+
+    color:#8fffff;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:1.7rem;
+}
+
+.signature small{
+
+    display:block;
+
+    font-family:Inter,sans-serif;
+
+    font-size:.57rem;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    color:
+        rgba(255,255,255,.27);
+
+    margin-top:8px;
+}
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final{
+
+    justify-content:center;
+
+    text-align:center;
+
+    min-height:100vh;
+}
+
+.final-orb{
+
+    width:130px;
+    height:130px;
+
+    margin:
+        0 auto 40px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    box-shadow:
+
+        0 0 80px
+        rgba(0,255,255,.10),
+
+        inset 0 0 40px
+        rgba(255,255,255,.02);
+
+    animation:
+        finalFloat
+        3s
+        infinite
+        ease-in-out;
+}
+
+.final-orb::after{
+
     content:"";
+
     width:25px;
     height:25px;
+
     border-radius:50%;
+
     background:
         linear-gradient(
             135deg,
             #8fffff,
-            #e2a2ff
+            #e0a4ff
         );
+
     box-shadow:
-        0 0 25px #8fffff,
-        0 0 60px rgba(200,100,255,.7);
+
+        0 0 25px
+        #8fffff,
+
+        0 0 60px
+        rgba(199,111,255,.6);
 }
 
-@keyframes heartFloat{
+@keyframes finalFloat{
+
     50%{
         transform:
             translateY(-10px)
@@ -1038,65 +2285,113 @@ section{
 }
 
 .final h2{
-    font-family:"Playfair Display",serif;
-    font-size:clamp(3rem,8vw,7rem);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(3.5rem,8vw,7rem);
+
     font-weight:500;
+
+    line-height:.95;
 }
 
-.final p{
-    max-width:650px;
-    margin:30px auto;
-    color:rgba(255,255,255,.55);
+.final-text{
+
+    max-width:680px;
+
+    margin:
+        35px auto;
+
+    color:
+        rgba(255,255,255,.48);
+
     line-height:2;
 }
 
 .from{
+
     margin-top:55px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
     color:#8fffff;
-    font-family:"Playfair Display",serif;
-    font-size:1.5rem;
+
+    font-size:1.6rem;
 }
 
 .from small{
+
     display:block;
-    color:rgba(255,255,255,.3);
+
     font-family:Inter,sans-serif;
-    font-size:.6rem;
+
+    color:
+        rgba(255,255,255,.25);
+
+    font-size:.57rem;
+
     letter-spacing:4px;
+
     text-transform:uppercase;
+
     margin-top:8px;
 }
 
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 footer{
-    position:relative;
-    z-index:2;
-    padding:30px;
+
+    padding:
+        35px 20px;
+
     text-align:center;
-    border-top:1px solid rgba(255,255,255,.06);
-    color:rgba(255,255,255,.25);
-    font-size:.65rem;
+
+    color:
+        rgba(255,255,255,.22);
+
+    font-size:.58rem;
+
     letter-spacing:2px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.05);
+
+    position:relative;
+
+    z-index:2;
 }
 
-/* =====================================================
-   REVEAL
-===================================================== */
+/* =========================================================
+   REVEALS
+========================================================= */
 
 .reveal{
+
     opacity:0;
-    transform:translateY(50px);
+
+    transform:
+        translateY(45px);
+
     transition:
         opacity 1s ease,
-        transform 1s cubic-bezier(.2,.8,.2,1);
+        transform 1s
+        cubic-bezier(.2,.8,.2,1);
 }
 
 .reveal.visible{
+
     opacity:1;
-    transform:translateY(0);
+
+    transform:
+        translateY(0);
 }
 
 .delay1{
@@ -1111,20 +2406,42 @@ footer{
     transition-delay:.45s;
 }
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media(max-width:800px){
+@media(max-width:850px){
 
-    .pin-orbit{
-        width:320px;
-        height:320px;
+    .portrait-section{
+
+        grid-template-columns:1fr;
+
+        gap:50px;
+    }
+
+    .portrait-frame{
+
+        max-width:550px;
+
+        margin:auto;
+    }
+
+    .cards{
+
+        grid-template-columns:1fr;
+    }
+
+    .connection-grid{
+
+        grid-template-columns:1fr;
     }
 
     .nav{
+
         overflow-x:auto;
+
         justify-content:flex-start;
+
         scrollbar-width:none;
     }
 
@@ -1133,105 +2450,136 @@ footer{
     }
 
     .nav a{
-        white-space:nowrap;
-    }
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .connection{
-        grid-template-columns:1fr;
-    }
-
-    .letter-wrap{
-        padding:30px;
-    }
-
-    .letter{
-        font-size:1.05rem;
-    }
-
-    .hero h1{
-        letter-spacing:-3px;
+        flex-shrink:0;
     }
 }
 
-@media(max-width:500px){
+@media(max-width:520px){
 
-    section{
-        padding:100px 0;
+    .pin-card{
+
+        padding:
+            38px
+            18px
+            30px;
     }
 
-    .pin-container{
-        padding:38px 18px;
+    .orbit.one{
+        width:320px;
+        height:320px;
     }
 
-    .pin-title{
-        font-size:2.15rem;
+    .orbit.two{
+        width:440px;
+        height:440px;
+    }
+
+    .orbit.three{
+        width:570px;
+        height:570px;
     }
 
     .keypad{
+
         max-width:270px;
     }
 
-    .splash-ring{
-        width:130px;
-        height:130px;
+    .key{
+
+        height:55px;
     }
 
-    .splash-letter{
-        font-size:4rem;
+    .hero h1{
+
+        letter-spacing:-4px;
     }
 
-    .card{
-        padding:28px;
+    .letter{
+
+        padding:32px 25px;
+    }
+
+    .letter p{
+
+        font-size:1.02rem;
     }
 
     .connection-box{
+
         padding:30px;
     }
 }
+
 </style>
 </head>
 
 <body>
 
 <!-- =====================================================
-     PARTICLES
+     ATMOSPHERE
 ===================================================== -->
 
 <div id="particles"></div>
 
+<div class="light-orb orb-a"></div>
+<div class="light-orb orb-b"></div>
+<div class="light-orb orb-c"></div>
+
 <!-- =====================================================
-     PIN LOCK SCREEN
+     MUSIC
 ===================================================== -->
 
-<div id="pinScreen">
+<audio
+    id="backgroundMusic"
+    loop
+    preload="auto">
 
-    <div class="pin-orbit"></div>
+    <source
+        src="https://files.catbox.moe/a9871o.mp3"
+        type="audio/mpeg">
 
-    <div class="unlock-burst"></div>
+</audio>
 
-    <div class="pin-container">
+<!-- =====================================================
+     PIN GATE
+===================================================== -->
 
-        <div class="pin-symbol">
-            <span></span>
+<div id="pinGate">
+
+    <div class="gate-aura"></div>
+
+    <div class="orbit one"></div>
+    <div class="orbit two"></div>
+    <div class="orbit three"></div>
+
+    <div class="unlock-wave"></div>
+
+    <div class="pin-card">
+
+        <div class="lock-logo">
+            <div class="lock-icon"></div>
         </div>
 
-        <div class="pin-label">
-            Private entrance
+        <div class="gate-label">
+            A private little entrance
         </div>
 
-        <h1 class="pin-title">
-            Welcome to<br>
-            <span>Jannet's Universe</span>
+        <h1 class="gate-title">
+
+            Something beautiful<br>
+
+            <span>
+                waits beyond.
+            </span>
+
         </h1>
 
-        <p class="pin-description">
-            A little world has been prepared for someone
-            special. Enter the four-digit access code to
-            continue.
+        <p class="gate-description">
+
+            Four digits open the door.
+            But the real surprise begins
+            after the door opens.
+
         </p>
 
         <div class="pin-dots">
@@ -1245,55 +2593,153 @@ footer{
 
         <div class="keypad">
 
-            <button class="key" data-key="1">1</button>
-            <button class="key" data-key="2">2</button>
-            <button class="key" data-key="3">3</button>
+            <button
+                class="key"
+                data-number="1">
+                1
+            </button>
 
-            <button class="key" data-key="4">4</button>
-            <button class="key" data-key="5">5</button>
-            <button class="key" data-key="6">6</button>
+            <button
+                class="key"
+                data-number="2">
+                2
+            </button>
 
-            <button class="key" data-key="7">7</button>
-            <button class="key" data-key="8">8</button>
-            <button class="key" data-key="9">9</button>
+            <button
+                class="key"
+                data-number="3">
+                3
+            </button>
 
-            <button class="key clear" data-action="clear">
+            <button
+                class="key"
+                data-number="4">
+                4
+            </button>
+
+            <button
+                class="key"
+                data-number="5">
+                5
+            </button>
+
+            <button
+                class="key"
+                data-number="6">
+                6
+            </button>
+
+            <button
+                class="key"
+                data-number="7">
+                7
+            </button>
+
+            <button
+                class="key"
+                data-number="8">
+                8
+            </button>
+
+            <button
+                class="key"
+                data-number="9">
+                9
+            </button>
+
+            <button
+                class="key clear"
+                data-action="clear">
                 Clear
             </button>
 
-            <button class="key" data-key="0">0</button>
+            <button
+                class="key"
+                data-number="0">
+                0
+            </button>
 
-            <button class="key enter" data-action="enter">
+            <button
+                class="key enter"
+                data-action="enter">
                 Enter
             </button>
 
         </div>
 
-        <div class="pin-status" id="pinStatus">
-            Four digits • one beautiful surprise
+        <div
+            class="pin-status"
+            id="pinStatus">
+
+            Enter the four-digit access code
+
         </div>
+
+    </div>
+
+    <div class="unlock-message">
+
+        <div class="mini">
+            Access accepted
+        </div>
+
+        <h2>
+            Welcome, Jannet.
+        </h2>
 
     </div>
 
 </div>
 
 <!-- =====================================================
-     MUSIC
+     CINEMATIC SPLASH
 ===================================================== -->
 
-<audio id="bgMusic" loop preload="auto">
-    <source
-        src="https://files.catbox.moe/a9871o.mp3"
-        type="audio/mpeg">
-</audio>
+<div id="splash">
+
+    <div class="splash-content">
+
+        <div class="splash-ring">
+
+            <div class="splash-j">
+                J
+            </div>
+
+        </div>
+
+        <div class="splash-small">
+            A digital appreciation
+        </div>
+
+        <h1 class="splash-title">
+            <span>
+                Jannet.
+            </span>
+        </h1>
+
+        <p class="splash-text">
+
+            A small universe created from appreciation,
+            friendship and the beautiful connection
+            between people who make life a little lighter.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     MUSIC BUTTON
+===================================================== -->
 
 <button
-    class="music-control"
-    id="musicBtn"
-    title="Music">
+    class="music-button"
+    id="musicButton"
+    aria-label="Toggle music">
 
     <div
-        class="music-bars"
+        class="bars"
         id="musicBars">
 
         <span></span>
@@ -1306,93 +2752,76 @@ footer{
 </button>
 
 <!-- =====================================================
-     ORIGINAL SPLASH
-===================================================== -->
-
-<div id="splash">
-
-    <div class="splash-content">
-
-        <div class="splash-ring">
-
-            <div class="splash-letter">
-                J
-            </div>
-
-        </div>
-
-        <div class="splash-small">
-            A little universe was made for
-        </div>
-
-        <h1 class="splash-title">
-            <span>Jannet.</span>
-        </h1>
-
-        <p class="splash-sub">
-            Some people enter our lives quietly,
-            yet somehow make the spaces around
-            us feel lighter, safer and happier.
-        </p>
-
-        <button
-            class="enter-btn"
-            id="enterBtn">
-
-            Enter her universe
-
-        </button>
-
-    </div>
-
-</div>
-
-<!-- =====================================================
      NAVIGATION
 ===================================================== -->
 
 <nav class="nav">
 
-    <a href="#home">Home</a>
-    <a href="#about">Jannet</a>
-    <a href="#appreciation">Appreciation</a>
-    <a href="#mercy">The Connection</a>
-    <a href="#letter">Letter</a>
-    <a href="#final">Ending</a>
+    <a href="#home">
+        Home
+    </a>
+
+    <a href="#portrait">
+        The Portrait
+    </a>
+
+    <a href="#story">
+        Her Story
+    </a>
+
+    <a href="#connection">
+        Connection
+    </a>
+
+    <a href="#letter">
+        Letter
+    </a>
+
+    <a href="#final">
+        Forever
+    </a>
 
 </nav>
 
 <!-- =====================================================
-     MAIN CONTENT
+     MAIN WEBSITE
 ===================================================== -->
 
 <main>
 
-<section class="hero" id="home">
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="hero"
+    id="home">
 
     <div class="hero-inner">
 
         <div class="eyebrow reveal">
-            A digital appreciation
+            A little digital universe
         </div>
 
         <h1 class="reveal delay1">
             Jannet
         </h1>
 
-        <p class="hero-description reveal delay2">
+        <p class="hero-text reveal delay2">
 
-            This isn't just a website.
+            Some people become important not because
+            they ask for a place in your story,
+            but because their presence naturally
+            makes the story better.
 
             <br><br>
 
-            It's a small corner of the internet created
-            to say something that sometimes deserves
-            more than ordinary words.
+            This is a small appreciation for one of
+            those people.
 
         </p>
 
-        <div class="scroll-hint reveal delay3">
+        <div class="scroll reveal delay3">
 
             Explore her story
 
@@ -1404,74 +2833,181 @@ footer{
 
 </section>
 
-<section id="about">
+<!-- =====================================================
+     PORTRAIT
+===================================================== -->
+
+<section id="portrait">
 
     <div class="section-inner">
 
-        <div class="section-label reveal">
-            01 — The person behind the name
+        <div class="portrait-section">
+
+            <div
+                class="portrait-frame reveal">
+
+                <img
+                    src="https://files.catbox.moe/388oe6.jpeg"
+                    alt="A shared portrait of two friends">
+
+                <div class="portrait-caption">
+
+                    A moment.
+                    Two smiles.
+                    One beautiful friendship.
+
+                </div>
+
+            </div>
+
+            <div class="profile-copy">
+
+                <div class="profile-badge reveal">
+                    The people behind the story
+                </div>
+
+                <h2 class="reveal delay1">
+
+                    Mercy & Jannet
+
+                </h2>
+
+                <p class="reveal delay2">
+
+                    Some friendships don't need complicated
+                    explanations. They are visible in the
+                    laughter, the comfort, the conversations,
+                    the random campus moments and the simple
+                    feeling of knowing that someone has your back.
+
+                </p>
+
+                <p class="reveal delay2">
+
+                    This photograph represents exactly that:
+                    a shared moment between two people whose
+                    friendship has become part of a much bigger
+                    story.
+
+                </p>
+
+                <div class="motive reveal delay3">
+
+                    <div class="motive-title">
+                        The motive behind this page
+                    </div>
+
+                    <p>
+
+                        “I appreciate the people who make
+                        the people I love feel happy,
+                        comfortable and safe.”
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     STORY
+===================================================== -->
+
+<section id="story">
+
+    <div class="section-inner">
+
+        <div class="section-number reveal">
+            01 — Beyond the name
         </div>
 
         <h2 class="section-title reveal delay1">
-            Meet <span>Jannet.</span>
+
+            Why <span>Jannet</span><br>
+            deserves a page.
+
         </h2>
 
-        <p class="section-text reveal delay2">
+        <p class="section-description reveal delay2">
 
-            There are people who simply exist around us,
-            and then there are people who quietly become
-            part of the reason someone else's days feel better.
+            A person can become valuable to us through
+            the way they treat someone we care about.
+            Sometimes appreciation begins indirectly —
+            through another person's smile.
 
-            Jannet belongs to the second kind.
+            <br><br>
+
+            That's the heart behind this website.
 
         </p>
 
         <div class="cards">
 
-            <div class="card reveal">
+            <article class="card reveal">
 
-                <div class="card-number">
+                <div class="card-index">
                     01 / PRESENCE
                 </div>
 
-                <h3>Comfort</h3>
+                <h3>
+                    Comfort
+                </h3>
 
                 <p>
-                    The kind of presence that makes ordinary
-                    moments feel easier, lighter and more enjoyable.
+
+                    The best friendships create spaces where
+                    people don't have to pretend. They can
+                    laugh, talk, relax and simply exist.
+
                 </p>
 
-            </div>
+            </article>
 
-            <div class="card reveal delay1">
+            <article class="card reveal delay1">
 
-                <div class="card-number">
+                <div class="card-index">
                     02 / ENERGY
                 </div>
 
-                <h3>Joy</h3>
+                <h3>
+                    Joy
+                </h3>
 
                 <p>
-                    Someone who knows how to turn campus moments
-                    into memories worth remembering.
+
+                    Campus life becomes more memorable when
+                    there is somebody around who knows how
+                    to turn an ordinary afternoon into a story.
+
                 </p>
 
-            </div>
+            </article>
 
-            <div class="card reveal delay2">
+            <article class="card reveal delay2">
 
-                <div class="card-number">
+                <div class="card-index">
                     03 / TRUST
                 </div>
 
-                <h3>Safety</h3>
+                <h3>
+                    Security
+                </h3>
 
                 <p>
-                    A genuine friend whose presence can make
-                    another person feel comfortable being themselves.
+
+                    Genuine friendship gives people a feeling
+                    that they aren't navigating every new
+                    chapter completely alone.
+
                 </p>
 
-            </div>
+            </article>
 
         </div>
 
@@ -1479,75 +3015,98 @@ footer{
 
 </section>
 
-<section id="appreciation">
+<!-- =====================================================
+     APPRECIATION
+===================================================== -->
+
+<section>
 
     <div class="section-inner">
 
-        <div class="section-label reveal">
-            02 — Why this exists
+        <div class="section-number reveal">
+            02 — Appreciation
         </div>
 
         <h2 class="section-title reveal delay1">
 
-            Some appreciation<br>
-            deserves <span>space.</span>
+            The things that<br>
+            <span>matter.</span>
 
         </h2>
 
-        <p class="section-text reveal delay2">
+        <p class="section-description reveal delay2">
 
-            Brian created this little digital universe
-            because sometimes you don't need a complicated
-            reason to appreciate someone.
+            Jannet may not realize how much small moments
+            can matter to another person.
 
-            Sometimes it's enough to recognize the good
-            they bring into another person's life.
+            A conversation.
+            A laugh.
+            A walk.
+            A random campus adventure.
+            Someone simply being there.
+
+            Those moments accumulate into something beautiful.
 
         </p>
 
         <div class="cards">
 
-            <div class="card reveal">
+            <article class="card reveal">
 
-                <div class="card-number">A / 01</div>
+                <div class="card-index">
+                    A / 01
+                </div>
 
-                <h3>Thank you.</h3>
-
-                <p>
-                    For being there when Mercy needs someone
-                    to laugh with, talk to and simply enjoy
-                    the moment with.
-                </p>
-
-            </div>
-
-            <div class="card reveal delay1">
-
-                <div class="card-number">B / 02</div>
-
-                <h3>Keep shining.</h3>
+                <h3>
+                    Thank you
+                </h3>
 
                 <p>
-                    Your personality, your friendship and
-                    your presence can mean more than you
-                    probably realize.
+
+                    For being part of the moments that make
+                    Mercy's campus experience more enjoyable.
+
                 </p>
 
-            </div>
+            </article>
 
-            <div class="card reveal delay2">
+            <article class="card reveal delay1">
 
-                <div class="card-number">C / 03</div>
+                <div class="card-index">
+                    B / 02
+                </div>
 
-                <h3>Stay genuine.</h3>
+                <h3>
+                    Keep laughing
+                </h3>
 
                 <p>
-                    The world needs people who can make
-                    another person's day a little brighter
-                    without even trying too hard.
+
+                    Some of the greatest memories begin with
+                    absolutely nothing planned.
+
                 </p>
 
-            </div>
+            </article>
+
+            <article class="card reveal delay2">
+
+                <div class="card-index">
+                    C / 03
+                </div>
+
+                <h3>
+                    Stay genuine
+                </h3>
+
+                <p>
+
+                    The world always has room for people who
+                    make others feel accepted and comfortable.
+
+                </p>
+
+            </article>
 
         </div>
 
@@ -1555,53 +3114,85 @@ footer{
 
 </section>
 
-<section id="mercy">
+<!-- =====================================================
+     CONNECTION
+===================================================== -->
+
+<section id="connection">
 
     <div class="section-inner">
 
-        <div class="section-label reveal">
-            03 — The beautiful connection
+        <div class="section-number reveal">
+            03 — Through Mercy
         </div>
 
         <h2 class="section-title reveal delay1">
-            Through <span>Mercy.</span>
+
+            A friendship<br>
+            seen <span>from afar.</span>
+
         </h2>
 
-        <p class="section-text reveal delay2">
+        <p class="section-description reveal delay2">
 
-            And here is where this little story becomes
-            even more special.
+            Brian doesn't have to be present in every campus
+            moment to appreciate the people who are there.
+
+            Sometimes knowing that someone good is beside
+            Mercy is enough.
 
         </p>
 
-        <div class="connection">
+        <div class="connection-grid">
 
             <div class="connection-box reveal">
 
-                <h3>For Mercy</h3>
+                <div class="connection-label">
+                    For Mercy
+                </div>
+
+                <h3>
+                    Her campus world.
+                </h3>
 
                 <p>
-                    Campus is a completely different chapter.
-                    New people. New places. New experiences.
 
-                    Having a friend like Jannet around makes
-                    that chapter warmer, happier and easier
-                    to navigate.
+                    University is a new chapter filled with
+                    independence, unfamiliar places, new
+                    friendships and countless experiences.
+
+                    Having someone like Jannet around means
+                    Mercy gets to experience some of that
+                    chapter with genuine companionship.
+
                 </p>
 
             </div>
 
             <div class="connection-box reveal delay1">
 
-                <h3>From Brian</h3>
+                <div class="connection-label">
+                    From Brian
+                </div>
+
+                <h3>
+                    A quiet thank you.
+                </h3>
 
                 <p>
-                    As someone who cares deeply about Mercy,
-                    I appreciate the people who help her feel
-                    happy, safe and comfortable when I'm not
-                    physically there.
 
-                    And Jannet, that deserves recognition.
+                    I appreciate the people who contribute
+                    positively to Mercy's life.
+
+                    I appreciate the people who make her
+                    laugh when I'm not around.
+
+                    I appreciate the people who help her
+                    feel comfortable in a completely new
+                    environment.
+
+                    And Jannet, that's why you're here.
+
                 </p>
 
             </div>
@@ -1611,6 +3202,10 @@ footer{
     </div>
 
 </section>
+
+<!-- =====================================================
+     QUOTE
+===================================================== -->
 
 <section class="quote-section">
 
@@ -1618,16 +3213,16 @@ footer{
 
         <div class="big-quote reveal">
 
-            “Sometimes the greatest gift you can give
-            someone isn't something you buy.
-
+            “Sometimes appreciation begins
+            with realizing that someone else
+            is helping the person you love
             <span>
-                It's simply being a good friend.
+                feel a little more at home.
             </span>”
 
         </div>
 
-        <div class="quote-author reveal delay2">
+        <div class="quote-by reveal delay2">
             — Brian
         </div>
 
@@ -1635,98 +3230,140 @@ footer{
 
 </section>
 
+<!-- =====================================================
+     LETTER
+===================================================== -->
+
 <section id="letter">
 
     <div class="section-inner">
 
-        <div class="section-label reveal">
-            04 — A letter from Brian
+        <div class="section-number reveal">
+            04 — A letter
         </div>
 
         <h2 class="section-title reveal delay1">
 
-            Dear <span>Jannet,</span>
+            Dear <span>Jannet.</span>
 
         </h2>
 
-        <div class="letter-wrap reveal delay2">
+        <div class="letter reveal delay2">
 
-            <div class="letter">
+            <p>
 
-                <p>
-                    You probably weren't expecting a website
-                    from me.
-                </p>
+                You probably weren't expecting a website
+                from me.
 
-                <p>
-                    But here we are.
-                </p>
+            </p>
 
-                <p>
-                    I wanted to create something a little
-                    different — something that could capture
-                    a simple message:
-                </p>
+            <p>
 
-                <p>
-                    <strong>
-                        Thank you for being a good friend to Mercy.
-                    </strong>
-                </p>
+                And honestly, I could have just written
+                a normal message.
 
-                <p>
-                    I know campus life is filled with new
-                    experiences, new friendships, laughter,
-                    challenges and unforgettable moments.
-                </p>
+            </p>
 
-                <p>
-                    And whenever you and Mercy are together,
-                    having fun, laughing or simply enjoying
-                    yourselves, it gives me peace knowing
-                    that she has someone around her who makes
-                    those moments brighter.
-                </p>
+            <p>
 
-                <p>
-                    I don't take genuine friendship for granted.
-                    So although this little website may be
-                    dramatic, neon, animated and probably
-                    unnecessarily beautiful...
-                </p>
+                But sometimes ordinary words don't quite
+                capture the appreciation behind them.
 
-                <p>
-                    The message behind it is actually simple.
-                </p>
+            </p>
 
-                <p>
-                    <strong>
-                        I appreciate you.
-                    </strong>
-                </p>
+            <p>
 
-                <p>
-                    Keep making Mercy laugh.
-                    Keep enjoying campus.
-                    Keep creating beautiful memories.
-                    Keep being yourself.
-                </p>
+                So I built this little universe instead.
 
-                <p>
-                    And most importantly, never underestimate
-                    the positive effect your presence can have
-                    on somebody else's life.
-                </p>
+            </p>
 
-                <div class="signature">
+            <p>
 
-                    Brian
+                I want you to know that I genuinely
+                appreciate the friendship you have built
+                with Mercy.
 
-                    <small>
-                        Written with appreciation
-                    </small>
+            </p>
 
-                </div>
+            <p>
+
+                Campus is a completely different world.
+                New people. New places. New experiences.
+                New challenges.
+
+            </p>
+
+            <p>
+
+                And whenever you are together — laughing,
+                talking, having fun or simply passing time —
+                I know Mercy isn't experiencing that chapter
+                completely alone.
+
+            </p>
+
+            <p>
+
+                That's something I value.
+
+            </p>
+
+            <p>
+
+                You don't have to do anything extraordinary
+                to deserve appreciation.
+
+                Sometimes simply being a good friend is
+                extraordinary enough.
+
+            </p>
+
+            <p>
+
+                So thank you.
+
+                For the laughter.
+                For the company.
+                For the friendship.
+                For being part of Mercy's campus story.
+
+            </p>
+
+            <p>
+
+                Keep being yourself.
+
+                Keep creating memories.
+
+                Keep making the people around you smile.
+
+            </p>
+
+            <p>
+
+                And whenever you look back at your campus
+                years, I hope there will be countless moments
+                that make you smile.
+
+            </p>
+
+            <p>
+
+                This page is simply my way of saying:
+
+                <strong>
+                    I see the good you bring.
+                </strong>
+
+            </p>
+
+            <div class="signature">
+
+                Brian
+
+                <small>
+                    Through Mercy • With appreciation
+                </small>
 
             </div>
 
@@ -1736,31 +3373,42 @@ footer{
 
 </section>
 
-<section class="final" id="final">
+<!-- =====================================================
+     FINAL
+===================================================== -->
+
+<section
+    class="final"
+    id="final">
 
     <div>
 
-        <div class="final-heart reveal"></div>
+        <div class="final-orb reveal"></div>
 
-        <div class="section-label reveal">
-            05 — One last thing
+        <div class="section-number reveal">
+            05 — The final page
         </div>
 
         <h2 class="reveal delay1">
 
-            Stay amazing,<br>
+            Stay<br>
+            amazing,<br>
             Jannet.
 
         </h2>
 
-        <p class="reveal delay2">
+        <p class="final-text reveal delay2">
 
-            May your campus days be filled with laughter,
-            beautiful friendships, unforgettable memories
-            and moments that make you genuinely happy.
+            May your campus years become a collection
+            of stories you'll never get tired of telling.
 
-            Keep being that person who makes the people
-            around you feel a little better.
+            May friendship find you in unexpected places.
+
+            May laughter always find its way back.
+
+            And may you continue being the kind of person
+            whose presence makes someone else's world
+            feel a little warmer.
 
         </p>
 
@@ -1769,7 +3417,7 @@ footer{
             From Brian
 
             <small>
-                through Mercy
+                Through Mercy
             </small>
 
         </div>
@@ -1780,290 +3428,483 @@ footer{
 
 </main>
 
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
 <footer>
 
-    JANNET — A LITTLE DIGITAL UNIVERSE
+    JANNET — BEYOND ORDINARY FRIENDSHIP
 
     <br><br>
 
-    Made with appreciation by Brian
+    A little digital universe created by Brian.
 
 </footer>
 
 <script>
 
-/* =====================================================
+/* =========================================================
    PARTICLES
-===================================================== */
+========================================================= */
 
-const particles =
+const particleLayer =
     document.getElementById("particles");
 
-for(let i=0;i<90;i++){
+for(let i=0;i<110;i++){
 
-    const p =
+    const particle =
         document.createElement("div");
 
-    p.className="particle";
+    particle.className =
+        "particle";
 
-    p.style.left =
-        Math.random()*100+"%";
+    particle.style.left =
+        Math.random()*100 + "%";
 
-    p.style.animationDuration =
-        (8+Math.random()*15)+"s";
+    particle.style.animationDuration =
+        (8 + Math.random()*18) + "s";
 
-    p.style.animationDelay =
-        (-Math.random()*20)+"s";
+    particle.style.animationDelay =
+        (-Math.random()*20) + "s";
 
-    p.style.opacity =
-        .15+Math.random()*.65;
+    particle.style.setProperty(
+        "--drift",
+        ((Math.random()-.5)*180)+"px"
+    );
 
     const size =
-        1+Math.random()*3;
+        1 + Math.random()*3;
 
-    p.style.width=size+"px";
-    p.style.height=size+"px";
+    particle.style.width =
+        size+"px";
 
-    particles.appendChild(p);
+    particle.style.height =
+        size+"px";
+
+    particleLayer.appendChild(
+        particle
+    );
 }
 
-/* =====================================================
+/* =========================================================
    PIN SYSTEM
-===================================================== */
+========================================================= */
 
 const CORRECT_PIN = "7120";
 
-let enteredPin = "";
+let currentPin = "";
 
-const pinScreen =
-    document.getElementById("pinScreen");
+const pinGate =
+    document.getElementById("pinGate");
 
 const pinDots =
-    document.querySelectorAll(".pin-dot");
+    document.querySelectorAll(
+        ".pin-dot"
+    );
 
 const pinStatus =
-    document.getElementById("pinStatus");
+    document.getElementById(
+        "pinStatus"
+    );
 
-const keys =
-    document.querySelectorAll(".key");
+const keypadButtons =
+    document.querySelectorAll(
+        ".key"
+    );
 
-function updateDots(){
+function updatePinDots(){
 
-    pinDots.forEach((dot,index)=>{
+    pinDots.forEach(
+        (dot,index)=>{
 
-        dot.classList.remove("filled");
-        dot.classList.remove("error");
+            dot.classList.remove(
+                "active",
+                "wrong"
+            );
 
-        if(index < enteredPin.length){
+            if(
+                index <
+                currentPin.length
+            ){
 
-            dot.classList.add("filled");
+                dot.classList.add(
+                    "active"
+                );
+
+            }
 
         }
-
-    });
-
+    );
 }
 
 function clearPin(){
 
-    enteredPin="";
+    currentPin = "";
 
-    updateDots();
+    updatePinDots();
 
     pinStatus.textContent =
-        "Four digits • one beautiful surprise";
+        "Enter the four-digit access code";
 
-    pinStatus.className="pin-status";
-
+    pinStatus.className =
+        "pin-status";
 }
 
 function wrongPin(){
 
-    pinDots.forEach(dot=>{
+    pinDots.forEach(
+        dot=>{
 
-        dot.classList.remove("filled");
-        dot.classList.add("error");
+            dot.classList.remove(
+                "active"
+            );
 
-    });
+            dot.classList.add(
+                "wrong"
+            );
+
+        }
+    );
 
     pinStatus.textContent =
-        "That code didn't open the door.";
+        "That isn't the right key.";
 
     pinStatus.className =
         "pin-status error";
 
-    pinScreen
+    pinGate
+        .querySelector(".pin-card")
         .animate(
             [
-                {transform:"translateX(0)"},
-                {transform:"translateX(-10px)"},
-                {transform:"translateX(10px)"},
-                {transform:"translateX(-7px)"},
-                {transform:"translateX(7px)"},
-                {transform:"translateX(0)"}
+                {
+                    transform:
+                        "translateX(0)"
+                },
+                {
+                    transform:
+                        "translateX(-13px)"
+                },
+                {
+                    transform:
+                        "translateX(13px)"
+                },
+                {
+                    transform:
+                        "translateX(-9px)"
+                },
+                {
+                    transform:
+                        "translateX(9px)"
+                },
+                {
+                    transform:
+                        "translateX(0)"
+                }
             ],
             {
-                duration:450
+                duration:550,
+                easing:"ease-in-out"
             }
         );
 
-    setTimeout(clearPin,800);
-
+    setTimeout(
+        clearPin,
+        750
+    );
 }
 
-function unlock(){
+/* =========================================================
+   THE IMPORTANT CHANGE:
+   FOURTH DIGIT DOES NOT UNLOCK
+========================================================= */
+
+function enterPin(){
+
+    if(
+        currentPin.length !== 4
+    ){
+
+        pinStatus.textContent =
+            "Enter all four digits first.";
+
+        pinStatus.className =
+            "pin-status error";
+
+        return;
+    }
+
+    if(
+        currentPin !==
+        CORRECT_PIN
+    ){
+
+        wrongPin();
+
+        return;
+    }
+
+    beginUnlock();
+}
+
+/* =========================================================
+   CINEMATIC UNLOCK
+========================================================= */
+
+function beginUnlock(){
+
+    /* prevent double clicking */
+
+    if(
+        pinGate.classList.contains(
+            "unlocking"
+        )
+    ){
+        return;
+    }
 
     pinStatus.textContent =
-        "Access granted • welcome, Jannet";
+        "Access accepted • preparing your experience...";
 
     pinStatus.className =
         "pin-status success";
 
-    pinDots.forEach(dot=>{
+    /*
+       Start music here.
+       This works because Enter is a
+       real user interaction.
+    */
 
-        dot.classList.remove("error");
-        dot.classList.add("filled");
+    startMusic();
 
-    });
+    /*
+       Begin the long transformation.
+    */
 
-    pinScreen.classList.add("unlocking");
+    pinGate.classList.add(
+        "unlocking"
+    );
+
+    /*
+       After the cinematic gate has
+       had time to transform, reveal
+       the splash.
+    */
 
     setTimeout(()=>{
 
-        document.body.style.overflowY="auto";
+        pinGate.style.opacity =
+            "0";
 
-    },1300);
+        pinGate.style.visibility =
+            "hidden";
+
+    },4200);
 
     setTimeout(()=>{
 
-        pinScreen.style.display="none";
+        const splash =
+            document.getElementById(
+                "splash"
+            );
 
-        document.getElementById("splash")
-            .style.display="flex";
+        splash.classList.add(
+            "show"
+        );
 
-    },1700);
+    },3500);
+
+    /*
+       Splash automatically becomes
+       the actual website.
+    */
+
+    setTimeout(()=>{
+
+        const splash =
+            document.getElementById(
+                "splash"
+            );
+
+        splash.style.opacity =
+            "0";
+
+        splash.style.visibility =
+            "hidden";
+
+        document.body.classList.add(
+            "ready"
+        );
+
+        startReveals();
+
+    },7000);
 
 }
 
-function checkPin(){
+/* =========================================================
+   KEYPAD
+========================================================= */
 
-    if(enteredPin.length !== 4)
-        return;
+keypadButtons.forEach(
+    button=>{
 
-    if(enteredPin === CORRECT_PIN){
+        button.addEventListener(
+            "click",
+            ()=>{
 
-        unlock();
+                const number =
+                    button.dataset.number;
 
-    }else{
+                const action =
+                    button.dataset.action;
 
-        wrongPin();
+                if(
+                    number !== undefined
+                ){
 
-    }
+                    if(
+                        currentPin.length <
+                        4
+                    ){
 
-}
+                        currentPin +=
+                            number;
 
-keys.forEach(key=>{
+                        updatePinDots();
 
-    key.addEventListener("click",()=>{
+                    }
 
-        const digit =
-            key.dataset.key;
+                    return;
+                }
 
-        const action =
-            key.dataset.action;
+                if(
+                    action === "clear"
+                ){
 
-        if(digit !== undefined){
+                    clearPin();
 
-            if(enteredPin.length < 4){
+                    return;
+                }
 
-                enteredPin += digit;
+                if(
+                    action === "enter"
+                ){
 
-                updateDots();
-
-                if(enteredPin.length === 4){
-
-                    setTimeout(checkPin,250);
+                    enterPin();
 
                 }
 
             }
+        );
 
+    }
+);
+
+/* =========================================================
+   KEYBOARD PIN SUPPORT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            pinGate.style.visibility ===
+            "hidden"
+        ){
+            return;
         }
 
-        if(action === "clear"){
-
-            clearPin();
-
+        if(
+            pinGate.classList.contains(
+                "unlocking"
+            )
+        ){
+            return;
         }
 
-        if(action === "enter"){
+        if(
+            /^[0-9]$/.test(
+                event.key
+            )
+        ){
 
-            checkPin();
+            if(
+                currentPin.length < 4
+            ){
 
-        }
+                currentPin +=
+                    event.key;
 
-    });
-
-});
-
-/* Keyboard support */
-
-document.addEventListener("keydown",e=>{
-
-    if(
-        pinScreen.style.display === "none"
-    ) return;
-
-    if(/^[0-9]$/.test(e.key)){
-
-        if(enteredPin.length < 4){
-
-            enteredPin += e.key;
-
-            updateDots();
-
-            if(enteredPin.length === 4){
-
-                setTimeout(checkPin,250);
+                updatePinDots();
 
             }
 
+            return;
+        }
+
+        if(
+            event.key ===
+            "Backspace"
+        ){
+
+            currentPin =
+                currentPin.slice(
+                    0,
+                    -1
+                );
+
+            updatePinDots();
+
+            return;
+        }
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            clearPin();
+
+            return;
+        }
+
+        /*
+           ENTER KEY NOW ACTUALLY
+           MATTERS.
+        */
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            enterPin();
+
         }
 
     }
+);
 
-    if(e.key === "Backspace"){
-
-        enteredPin =
-            enteredPin.slice(0,-1);
-
-        updateDots();
-
-    }
-
-    if(e.key === "Escape"){
-
-        clearPin();
-
-    }
-
-});
-
-/* =====================================================
+/* =========================================================
    MUSIC
-===================================================== */
+========================================================= */
 
 const music =
-    document.getElementById("bgMusic");
+    document.getElementById(
+        "backgroundMusic"
+    );
 
-const musicBtn =
-    document.getElementById("musicBtn");
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
 
 const musicBars =
-    document.getElementById("musicBars");
-
-const enterBtn =
-    document.getElementById("enterBtn");
+    document.getElementById(
+        "musicBars"
+    );
 
 async function startMusic(){
 
@@ -2071,179 +3912,243 @@ async function startMusic(){
 
         await music.play();
 
-        musicBars
-            .classList.remove(
-                "music-paused"
-            );
+        musicBars.classList.remove(
+            "paused"
+        );
 
     }catch(error){
 
         console.log(
-            "Audio requires user interaction."
+            "Browser waiting for audio permission."
         );
 
     }
-
 }
 
-enterBtn.addEventListener("click",()=>{
+musicButton.addEventListener(
+    "click",
+    async()=>{
 
-    startMusic();
+        if(
+            music.paused
+        ){
 
-    document
-        .getElementById("splash")
-        .classList.add("hide");
+            await startMusic();
 
-});
+        }else{
 
-musicBtn.addEventListener("click",async()=>{
+            music.pause();
 
-    if(music.paused){
-
-        await startMusic();
-
-    }else{
-
-        music.pause();
-
-        musicBars
-            .classList.add(
-                "music-paused"
+            musicBars.classList.add(
+                "paused"
             );
 
-    }
-
-});
-
-/* =====================================================
-   SCROLL REVEAL
-===================================================== */
-
-const observer =
-    new IntersectionObserver(
-
-        entries=>{
-
-            entries.forEach(entry=>{
-
-                if(entry.isIntersecting){
-
-                    entry.target
-                        .classList
-                        .add("visible");
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold:.12
         }
-
-    );
-
-document
-    .querySelectorAll(".reveal")
-    .forEach(el=>
-        observer.observe(el)
-    );
-
-/* =====================================================
-   SMOOTH NAV
-===================================================== */
-
-document
-    .querySelectorAll(".nav a")
-    .forEach(link=>{
-
-        link.addEventListener(
-            "click",
-            e=>{
-
-                e.preventDefault();
-
-                const target =
-                    document.querySelector(
-                        link.getAttribute("href")
-                    );
-
-                if(target){
-
-                    target.scrollIntoView({
-                        behavior:"smooth"
-                    });
-
-                }
-
-            }
-        );
-
-    });
-
-/* =====================================================
-   CURSOR LIGHT
-===================================================== */
-
-const cursorGlow =
-    document.createElement("div");
-
-cursorGlow.style.position="fixed";
-cursorGlow.style.width="180px";
-cursorGlow.style.height="180px";
-cursorGlow.style.borderRadius="50%";
-cursorGlow.style.pointerEvents="none";
-cursorGlow.style.zIndex="1";
-
-cursorGlow.style.background=
-"radial-gradient(circle,rgba(0,255,255,.07),transparent 70%)";
-
-cursorGlow.style.transform=
-"translate(-50%,-50%)";
-
-cursorGlow.style.transition=
-"left .15s ease,top .15s ease";
-
-document.body.appendChild(cursorGlow);
-
-document.addEventListener(
-    "mousemove",
-    e=>{
-
-        cursorGlow.style.left =
-            e.clientX+"px";
-
-        cursorGlow.style.top =
-            e.clientY+"px";
 
     }
 );
 
-/* =====================================================
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+let revealObserver;
+
+function startReveals(){
+
+    if(
+        revealObserver
+    ){
+        return;
+    }
+
+    revealObserver =
+        new IntersectionObserver(
+            entries=>{
+
+                entries.forEach(
+                    entry=>{
+
+                        if(
+                            entry.isIntersecting
+                        ){
+
+                            entry.target
+                                .classList
+                                .add(
+                                    "visible"
+                                );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:.12
+            }
+        );
+
+    document
+        .querySelectorAll(
+            ".reveal"
+        )
+        .forEach(
+            element=>
+                revealObserver.observe(
+                    element
+                )
+        );
+}
+
+/* =========================================================
+   SMOOTH NAVIGATION
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".nav a"
+    )
+    .forEach(
+        link=>{
+
+            link.addEventListener(
+                "click",
+                event=>{
+
+                    event.preventDefault();
+
+                    const target =
+                        document.querySelector(
+                            link.getAttribute(
+                                "href"
+                            )
+                        );
+
+                    if(
+                        target
+                    ){
+
+                        target.scrollIntoView({
+                            behavior:
+                                "smooth"
+                        });
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+/* =========================================================
+   CURSOR LIGHT
+========================================================= */
+
+const cursorGlow =
+    document.createElement(
+        "div"
+    );
+
+cursorGlow.style.position =
+    "fixed";
+
+cursorGlow.style.width =
+    "180px";
+
+cursorGlow.style.height =
+    "180px";
+
+cursorGlow.style.borderRadius =
+    "50%";
+
+cursorGlow.style.pointerEvents =
+    "none";
+
+cursorGlow.style.zIndex =
+    "1";
+
+cursorGlow.style.background =
+    "radial-gradient(circle,rgba(0,255,255,.065),transparent 70%)";
+
+cursorGlow.style.transform =
+    "translate(-50%,-50%)";
+
+cursorGlow.style.transition =
+    "left .12s ease,top .12s ease";
+
+document.body.appendChild(
+    cursorGlow
+);
+
+document.addEventListener(
+    "mousemove",
+    event=>{
+
+        cursorGlow.style.left =
+            event.clientX+"px";
+
+        cursorGlow.style.top =
+            event.clientY+"px";
+
+    }
+);
+
+/* =========================================================
    PARALLAX
-===================================================== */
+========================================================= */
 
 window.addEventListener(
     "scroll",
     ()=>{
 
-        const y =
+        const scroll =
             window.scrollY;
 
-        document
-            .querySelector(".pin-orbit")
-            ?.style
-            .setProperty(
-                "transform",
-                `translateY(${y*.02}px)`
+        const orbA =
+            document.querySelector(
+                ".orb-a"
             );
 
+        const orbB =
+            document.querySelector(
+                ".orb-b"
+            );
+
+        const orbC =
+            document.querySelector(
+                ".orb-c"
+            );
+
+        if(orbA){
+            orbA.style.transform =
+                `translateY(${scroll*.07}px)`;
+        }
+
+        if(orbB){
+            orbB.style.transform =
+                `translateY(${scroll*-.04}px)`;
+        }
+
+        if(orbC){
+            orbC.style.transform =
+                `translateY(${scroll*.03}px)`;
+        }
+
     }
+);
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+document.body.classList.remove(
+    "ready"
 );
 
 </script>
 
 </body>
 </html>
-```
